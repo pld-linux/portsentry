@@ -6,6 +6,7 @@ Release:	6
 License:	distributable (see LICENSE)
 Group:		Applications/Networking
 Source0:	http://www.psionic.com/downloads/%{name}-%{version}.tar.gz
+# Source0-md5:	782839446b7eca554bb1880ef0882670
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-logging-pld.patch
