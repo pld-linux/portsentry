@@ -15,7 +15,7 @@ Patch1:		%{name}-pld.patch
 URL:		http://www.psionic.com/tools/portsentry/
 Prereq:		textutils
 Prereq:		sed
-Prereq:		/sbin/chkconfig
+Prereq:		rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/portsentry
