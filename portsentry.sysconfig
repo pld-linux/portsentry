@@ -1,6 +1,9 @@
 # $Id$
 # Customized settings for Abacus Portsentry
 
+# Define services nice level
+SERVICE_RUN_NICE_LEVEL="+0"
+
 #
 # Basic Switches
 #

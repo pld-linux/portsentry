@@ -1,6 +1,15 @@
 diff -ur portsentry-1.0.orig/portsentry.conf portsentry-1.0/portsentry.conf
 --- portsentry-1.0.orig/portsentry.conf	Tue Mar  7 21:37:00 2000
-+++ portsentry-1.0/portsentry.conf	Mon Apr 17 23:06:35 2000
++++ portsentry-1.0/portsentry.conf	Wed Apr 19 14:52:06 2000
+@@ -82,7 +82,7 @@
+ # Hosts to ignore
+ IGNORE_FILE="/etc/portsentry/portsentry.ignore"
+ # Hosts that have been denied (running history)
+-HISTORY_FILE="/etc/portsentry.history"
++HISTORY_FILE="/etc/portsentry/portsentry.history"
+ # Hosts that have been denied this session only (temporary until next restart)
+ BLOCKED_FILE="/etc/portsentry/portsentry.blocked"
+ 
 @@ -249,8 +249,7 @@
  # SSL [TCP port 443] and you immediately block them). Some of you
  # may even want this though. Just be careful.
@@ -13,7 +22,7 @@ diff -ur portsentry-1.0.orig/portsentry.conf portsentry-1.0/portsentry.conf
  # Port Banner Section#
 diff -ur portsentry-1.0.orig/portsentry_config.h portsentry-1.0/portsentry_config.h
 --- portsentry-1.0.orig/portsentry_config.h	Mon Apr 17 23:05:15 2000
-+++ portsentry-1.0/portsentry_config.h	Mon Apr 17 22:46:19 2000
++++ portsentry-1.0/portsentry_config.h	Mon Apr 17 23:24:02 2000
 @@ -34,7 +34,7 @@
  #define CONFIG_FILE "/etc/portsentry/portsentry.conf"
  
