@@ -15,15 +15,16 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/portsentry
 %description
-PortSentry is part of the Abacus Project suite of tools. The Abacus Project
-is an initiative to release low-maintenance, generic, and reliable host
-based intrusion detection software to the Internet community.
+PortSentry is part of the Abacus Project suite of tools. The Abacus
+Project is an initiative to release low-maintenance, generic, and
+reliable host based intrusion detection software to the Internet
+community.
 
 %description -l pl
-PortSentry jest czê¶ci± zestawu narzêdzi Projektu Abacus. Projekt Abacus ma
-na celu stworzenie ogólnego, pewnego i wymagaj±cego niewielkiej obs³ugi
-oprogramowania do wykrywania prób skanowania portów dla internetowej
-spo³eczno¶ci.
+PortSentry jest czê¶ci± zestawu narzêdzi Projektu Abacus. Projekt
+Abacus ma na celu stworzenie ogólnego, pewnego i wymagaj±cego
+niewielkiej obs³ugi oprogramowania do wykrywania prób skanowania
+portów dla internetowej spo³eczno¶ci.
 
 %prep
 %setup  -q
