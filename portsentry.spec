@@ -10,6 +10,7 @@ Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-logging-pld.patch
 URL:		http://www.psionic.com/products/
+PreReq:		/bin/awk
 PreReq:		/bin/csh
 PreReq:		/sbin/chkconfig
 PreReq:		fileutils
