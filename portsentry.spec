@@ -2,7 +2,7 @@ Summary:	Port scan detection and active defense
 Summary(pl):	Program wykrywaj±cy skanowanie portów i umo¿liwiaj±cy obronê
 Name:		portsentry
 Version:	1.0
-Release:	6
+Release:	7
 License:	distributable (see LICENSE)
 Group:		Applications/Networking
 Group(de):	Applikationen/Netzwerkwesen
@@ -16,6 +16,7 @@ URL:		http://www.psionic.com/tools/portsentry/
 Prereq:		textutils
 Prereq:		sed
 Prereq:		rc-scripts
+Prereq:		/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/portsentry
