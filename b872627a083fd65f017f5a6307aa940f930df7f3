@@ -1,0 +1,4 @@
+- adapterized again,
+- added pld patch (hosts.deny fix),
+- added initscript,
+- added sysconfig support.
