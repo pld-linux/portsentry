@@ -2,7 +2,7 @@ Summary:	Port scan detection and active defense
 Summary(pl):	Program wykrywaj±cy skanowanie portów i umo¿liwiaj±cy obronê
 Name:		portsentry
 Version:	1.1
-Release:	1
+Release:	2
 License:	distributable (see LICENSE)
 Group:		Applications/Networking
 Source0:	http://www.psionic.com/downloads/%{name}-%{version}.tar.gz
@@ -43,6 +43,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},/etc/{rc.d/init.d,sysconfig}}
 
 %{__make} install INSTALLDIR=$RPM_BUILD_ROOT/etc
 install ignore.csh $RPM_BUILD_ROOT%{_bindir}
+install portsentry $RPM_BUILD_ROOT%{_bindir}
 
 gzip -9nf README* CHANGES CREDITS LICENSE
 
