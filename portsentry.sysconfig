@@ -1,0 +1,35 @@
+# $Id$
+# Customized settings for Abacus Portsentry
+
+#
+# Basic Switches
+#
+
+# Do you want TCP scan protection?
+PORTSENTRY_TCP="false"
+
+# Do you want UDP scan protection?
+PORTSENTRY_UDP="false"
+
+#
+# Stealth Switches
+#
+
+# Do you want TCP Stealth Scan protection?
+PORTSENTRY_STCP="false"
+
+# Do you want UDP Stealth Scan protection?
+PORTSENTRY_SUDP="false"
+
+# Advanced Switches
+#
+# WARNING! Using this switches without a proper knowledge 
+#          may cause some false security alerts. In fact,
+#          if it's set by default it means that good boys from PLD
+#          have looked at config files and it should work almost fine. :>
+
+# Do you want an automatic/inteligent TCP Stealth Scan protection?
+PORTSENTRY_ATCP="true"
+
+# Do you want an automatic/inteligent UDP Stealth Scan protection?
+PORTSENTRY_AUDP="true"

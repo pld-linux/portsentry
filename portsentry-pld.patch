@@ -1,0 +1,25 @@
+diff -ur portsentry-1.0.orig/portsentry.conf portsentry-1.0/portsentry.conf
+--- portsentry-1.0.orig/portsentry.conf	Tue Mar  7 21:37:00 2000
++++ portsentry-1.0/portsentry.conf	Mon Apr 17 23:06:35 2000
+@@ -249,8 +249,7 @@
+ # SSL [TCP port 443] and you immediately block them). Some of you
+ # may even want this though. Just be careful.
+ #
+-
+-SCAN_TRIGGER="0"
++SCAN_TRIGGER="2"
+ 
+ ######################
+ # Port Banner Section#
+diff -ur portsentry-1.0.orig/portsentry_config.h portsentry-1.0/portsentry_config.h
+--- portsentry-1.0.orig/portsentry_config.h	Mon Apr 17 23:05:15 2000
++++ portsentry-1.0/portsentry_config.h	Mon Apr 17 22:46:19 2000
+@@ -34,7 +34,7 @@
+ #define CONFIG_FILE "/etc/portsentry/portsentry.conf"
+ 
+ /* The location of Wietse Venema's TCP Wrapper hosts.deny file */
+-#define WRAPPER_HOSTS_DENY "/etc/hosts.deny"
++#define WRAPPER_HOSTS_DENY "/etc/tcpd/hosts.deny"
+ 
+ /* The default syslog is as daemon.notice. You can also use */
+ /* any of the facilities from syslog.h to send messages to (LOCAL0, etc) */
