@@ -2,18 +2,22 @@ Summary:	Port scan detection and active defense
 Summary(pl):	Program wykrywaj±cy skanowanie portów i umo¿liwiaj±cy obronê
 Name:		portsentry
 Version:	1.1
-Release:	2
+Release:	3
 License:	distributable (see LICENSE)
 Group:		Applications/Networking
 Source0:	http://www.psionic.com/downloads/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-logging-pld.patch
-URL:		http://www.psionic.com/tools/portsentry/
-Prereq:		textutils
-Prereq:		sed
-Prereq:		rc-scripts
-Prereq:		/sbin/chkconfig
+URL:		http://www.psionic.com/products/
+PreReq:		/bin/csh
+PreReq:		/sbin/chkconfig
+PreReq:		fileutils
+PreReq:		grep
+PreReq:		net-tools
+PreReq:		rc-scripts
+PreReq:		sed
+PreReq:		textutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/portsentry
@@ -53,7 +57,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/portsentry
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -n portsentry
+%post
 %{_bindir}/ignore.csh
 /sbin/chkconfig --add portsentry
 ls --color=none /var/lock/subsys/portsentry* >/dev/null 2>&1
@@ -63,7 +67,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/portsentry start\" to start portsentry daemon."
 fi
 
-%preun -n portsentry
+%preun
 if [ "$1" = "0" ]; then
 	ls --color=none /var/lock/subsys/portsentry* >/dev/null 2>&1
 	if [ $? -eq "0" ]; then
