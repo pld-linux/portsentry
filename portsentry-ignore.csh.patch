@@ -1,0 +1,57 @@
+diff -urN portsentry-1.1.orig/ignore.csh portsentry-1.1/ignore.csh
+--- portsentry-1.1.orig/ignore.csh	Wed Jul 11 18:57:49 2001
++++ portsentry-1.1/ignore.csh	Fri Mar  8 20:36:54 2002
+@@ -15,6 +15,11 @@
+ # Modified: Christopher P. Lindsey <lindsey@mallorn.com>                #
+ # Modified Date: 06-04-99                                               #
+ # Modified Note: Added support for various OSs, -f flag on startup      #
++#									#
++# Modified: Michal Kochanowicz <mkochano@pld.org.pl>			#
++# Modified Date: 03-08-02						#
++# Modified Note: Linux version more inteligent, make use of awk, don't	#
++#		 need grep						#
+ #                                                                       #
+ # $Id$     #
+ #########################################################################
+@@ -35,32 +40,31 @@
+ endif
+   
+ # Safe directory 
+-set SENTRYDIR=/usr/local/psionic/portsentry
++set SENTRYDIR=/etc/portsentry
+ set TMPFILE=portsentry.ignore.tmp
+  
+ if (-f $SENTRYDIR/portsentry.ignore) then 
+-   head -3 $SENTRYDIR/portsentry.ignore > $SENTRYDIR/$TMPFILE
++   cp -p $SENTRYDIR/portsentry.ignore $SENTRYDIR/$TMPFILE
+ else
+    echo > $SENTRYDIR/$TMPFILE
+ endif
+ 
+-# This entry should always be in the file.
+-echo '0.0.0.0' >> $SENTRYDIR/$TMPFILE
+-
+ if ($OS == "Linux") then 
+-   foreach i ( `ifconfig -a | grep inet | awk '{print $2}' | sed 's/addr://'` )
+-      echo $i >> $SENTRYDIR/$TMPFILE
++   foreach i ( '0.0.0.0' `ip addr | awk 'BEGIN { FS="[ /]+"; } $2 == "inet" { print $3; }'` )
++      if ( { awk '/^'$i'/ { exit 1 } ' $SENTRYDIR/$TMPFILE } ) then
++         echo $i >> $SENTRYDIR/$TMPFILE
++      endif
+    end
+ else if ($OS == "HPUX") then
+-   foreach i (`lanscan -i`)
++   foreach i ('0.0.0.0' `lanscan -i`)
+       ifconfig $i | grep inet | awk '{print $2}' >> $SENTRYDIR/$TMPFILE
+    end
+ else if ($OS == "Solaris 2.x" || $OS == "NeXTStep" || $OS == "FreeBSD" || \
+          $OS == "SunOS 4.x" || $OS == "OSF1" || $OS == "IRIX") then
+-   foreach i ( `ifconfig -a | grep inet | awk '{print $2}'` )
++   foreach i ('0.0.0.0' `ifconfig -a | grep inet | awk '{print $2}'` )
+       echo $i >> $SENTRYDIR/$TMPFILE
+    end
+ endif
+ 
+-cp $SENTRYDIR/$TMPFILE $SENTRYDIR/portsentry.ignore
++cp -p $SENTRYDIR/$TMPFILE $SENTRYDIR/portsentry.ignore
+ rm $SENTRYDIR/$TMPFILE
