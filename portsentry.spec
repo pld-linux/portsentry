@@ -1,15 +1,14 @@
 Summary:	Port scan detection and active defense
 Summary(pl):	Program wykrywaj±cy skanowanie portów i umo¿liwiaj±cy obronê
 Name:		portsentry
-Version:	1.0
-Release:	7
+Version:	1.1
+Release:	1
 License:	distributable (see LICENSE)
 Group:		Applications/Networking
-Source0:	http://www.psionic.com/tools/%{name}-%{version}.tar.gz
+Source0:	http://www.psionic.com/downloads/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
-Patch0:		%{name}-logging.patch
-Patch1:		%{name}-pld.patch
+Patch0:		%{name}-logging-pld.patch
 URL:		http://www.psionic.com/tools/portsentry/
 Prereq:		textutils
 Prereq:		sed
@@ -34,17 +33,16 @@ portów dla internetowej spo³eczno¶ci.
 %prep
 %setup  -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__make} linux CFLAGS="%{rpmcflags} -Wall"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
+install -d $RPM_BUILD_ROOT{%{_bindir},/etc/{rc.d/init.d,sysconfig}}
 
-%{__make} install INSTALLDIR=$RPM_BUILD_ROOT
-install ignore.sh $RPM_BUILD_ROOT%{_bindir}
+%{__make} install INSTALLDIR=$RPM_BUILD_ROOT/etc
+install ignore.csh $RPM_BUILD_ROOT%{_bindir}
 
 gzip -9nf README* CHANGES CREDITS LICENSE
 
@@ -55,7 +53,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/portsentry
 rm -rf $RPM_BUILD_ROOT
 
 %post -n portsentry
-%{_bindir}/ignore.sh
+%{_bindir}/ignore.csh
 /sbin/chkconfig --add portsentry
 ls --color=none /var/lock/subsys/portsentry* >/dev/null 2>&1
 if [ $? -eq "0" ]; then
