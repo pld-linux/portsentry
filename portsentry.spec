@@ -12,13 +12,13 @@ Source2:	%{name}.sysconfig
 Patch0:		%{name}-logging-pld.patch
 Patch1:		%{name}-ignore.csh.patch
 URL:		http://www.psionic.com/products/
+PreReq:		rc-scripts
 PreReq:		/bin/awk
 PreReq:		/bin/csh
-PreReq:		/sbin/chkconfig
-PreReq:		fileutils
 PreReq:		iproute2
-PreReq:		rc-scripts
 PreReq:		textutils
+Requires(post,preun):	/sbin/chkconfig
+Requires(post,preun):	fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/portsentry
@@ -41,13 +41,16 @@ portów dla internetowej spo³eczno¶ci.
 %patch1 -p1
 
 %build
-%{__make} linux CFLAGS="%{rpmcflags} -Wall"
+%{__make} linux \
+	CFLAGS="%{rpmcflags} -Wall"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},/etc/{rc.d/init.d,sysconfig}}
 
-%{__make} install INSTALLDIR=$RPM_BUILD_ROOT/etc
+%{__make} install \
+	INSTALLDIR=$RPM_BUILD_ROOT/etc
+
 install ignore.csh $RPM_BUILD_ROOT%{_bindir}
 install portsentry $RPM_BUILD_ROOT%{_bindir}
 
