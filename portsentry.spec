@@ -50,10 +50,10 @@ install -d $RPM_BUILD_ROOT{%{_bindir},/etc/{rc.d/init.d,sysconfig}}
 install ignore.csh $RPM_BUILD_ROOT%{_bindir}
 install portsentry $RPM_BUILD_ROOT%{_bindir}
 
-gzip -9nf README* CHANGES CREDITS LICENSE
-
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/portsentry
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/portsentry
+
+gzip -9nf README* CHANGES CREDITS LICENSE
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -81,8 +81,8 @@ fi
 %defattr(644,root,root,755)
 %doc *.gz
 %attr(750,root,root) %dir %{_sysconfdir}
-%attr(640,root,root) %config(noreplace) %{_sysconfdir}/portsentry.conf
-%attr(640,root,root) %config(noreplace missingok) %{_sysconfdir}/portsentry.ignore
-%attr(755,root,root) %{_bindir}/*
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/sysconfig/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/portsentry.conf
+%attr(640,root,root) %config(noreplace,missingok) %verify(not md5 size mtime) %{_sysconfdir}/portsentry.ignore
+%attr(640,root,root) %config %verify(not md5 size mtime) /etc/sysconfig/*
 %attr(754,root,root) /etc/rc.d/init.d/*
+%attr(755,root,root) %{_bindir}/*
