@@ -31,13 +31,13 @@ portów dla internetowej spo³eczno¶ci.
 %patch0 -p1 
 
 %build
-make linux CFLAGS="$RPM_OPT_FLAGS -Wall"
+%{__make} linux CFLAGS="$RPM_OPT_FLAGS -Wall"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
 
-make install INSTALLDIR=$RPM_BUILD_ROOT
+%{__make} install INSTALLDIR=$RPM_BUILD_ROOT
 install ignore.sh $RPM_BUILD_ROOT%{_bindir}
 strip $RPM_BUILD_ROOT%{_bindir}/portsentry
 
