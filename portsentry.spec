@@ -8,7 +8,7 @@ Group:		Applications/Networking
 Group(pl):	Aplikacje/Sieciowe
 Source0:	http://www.psionic.com/tools/%{name}-%{version}.tar.gz
 URL:		http://www.psionic.com/tools/portsentry/
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/portsentry
 %description
