@@ -57,22 +57,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %post -n portsentry
 %{_bindir}/ignore.sh
-/sbin/chkconfig --add portsentry
-ls --color=none /var/lock/subsys/portsentry* >/dev/null 2>&1
-if [ $? -eq "0" ]; then
-	/etc/rc.d/init.d/portsentry restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/portsentry start\" to start portsentry daemon."
-fi
+DESC="portsentry daemon"; %chkconfig_add
 
 %preun -n portsentry
-if [ "$1" = "0" ]; then
-	ls --color=none /var/lock/subsys/portsentry* >/dev/null 2>&1
-	if [ $? -eq "0" ]; then
-		/etc/rc.d/init.d/portsentry stop >&2
-	fi
-	/sbin/chkconfig --del portsentry
-fi
+%chkconfig_del
 
 %files
 %defattr(644,root,root,755)
