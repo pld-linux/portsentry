@@ -58,6 +58,7 @@ install portsentry $RPM_BUILD_ROOT%{_bindir}
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/portsentry
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/portsentry
 
+touch $RPM_BUILD_ROOT%{_sysconfdir}/{portsentry.blocked.{audp,atcp,stcp,sudp,tcp,udp},portsentry.history}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -87,6 +88,8 @@ fi
 %attr(750,root,root) %dir %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/portsentry.conf
 %attr(640,root,root) %config(noreplace,missingok) %verify(not md5 size mtime) %{_sysconfdir}/portsentry.ignore
+%attr(640,root,root) %ghost %{_sysconfdir}/portsentry.history
+%attr(640,root,root) %ghost %{_sysconfdir}/portsentry.blocked*
 %attr(640,root,root) %config %verify(not md5 size mtime) /etc/sysconfig/*
 %attr(754,root,root) /etc/rc.d/init.d/*
 %attr(755,root,root) %{_bindir}/*
