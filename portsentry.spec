@@ -2,7 +2,7 @@ Summary:	Port scan detection and active defense
 Summary(pl):	Program wykrywaj±cy skanowanie portów i umo¿liwiaj±cy obronê
 Name:		portsentry
 Version:	1.1
-Release:	5
+Release:	6
 License:	distributable (see LICENSE)
 Group:		Applications/Networking
 Source0:	http://www.psionic.com/downloads/%{name}-%{version}.tar.gz
