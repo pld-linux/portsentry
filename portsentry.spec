@@ -53,7 +53,6 @@ install portsentry $RPM_BUILD_ROOT%{_bindir}
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/portsentry
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/portsentry
 
-gzip -9nf README* CHANGES CREDITS LICENSE
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -79,7 +78,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc README* CHANGES CREDITS LICENSE
 %attr(750,root,root) %dir %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/portsentry.conf
 %attr(640,root,root) %config(noreplace,missingok) %verify(not md5 size mtime) %{_sysconfdir}/portsentry.ignore
