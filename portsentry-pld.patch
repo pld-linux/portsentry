@@ -1,0 +1,43 @@
+diff -ur portsentry-1.0.orig/portsentry.conf portsentry-1.0/portsentry.conf
+--- portsentry-1.0.orig/portsentry.conf	Tue Mar  7 21:37:00 2000
++++ portsentry-1.0/portsentry.conf	Wed Apr 19 17:49:33 2000
+@@ -82,7 +82,7 @@
+ # Hosts to ignore
+ IGNORE_FILE="/etc/portsentry/portsentry.ignore"
+ # Hosts that have been denied (running history)
+-HISTORY_FILE="/etc/portsentry.history"
++HISTORY_FILE="/etc/portsentry/portsentry.history"
+ # Hosts that have been denied this session only (temporary until next restart)
+ BLOCKED_FILE="/etc/portsentry/portsentry.blocked"
+ 
+@@ -192,7 +192,7 @@
+ #KILL_ROUTE="/sbin/ipfwadm -I -i deny -S $TARGET$"
+ #
+ # New ipchain support for Linux kernel version 2.102+
+-KILL_ROUTE="/sbin/ipchains -I input -s $TARGET$ -j DENY -l"
++KILL_ROUTE="/sbin/ipchains -I input -s $TARGET$ -j DENY"
+ #
+ # For those of you running FreeBSD (and compatible) you can
+ # use their built in firewalling as well. 
+@@ -249,8 +249,7 @@
+ # SSL [TCP port 443] and you immediately block them). Some of you
+ # may even want this though. Just be careful.
+ #
+-
+-SCAN_TRIGGER="0"
++SCAN_TRIGGER="2"
+ 
+ ######################
+ # Port Banner Section#
+diff -ur portsentry-1.0.orig/portsentry_config.h portsentry-1.0/portsentry_config.h
+--- portsentry-1.0.orig/portsentry_config.h	Mon Apr 17 23:05:15 2000
++++ portsentry-1.0/portsentry_config.h	Wed Apr 19 17:45:42 2000
+@@ -34,7 +34,7 @@
+ #define CONFIG_FILE "/etc/portsentry/portsentry.conf"
+ 
+ /* The location of Wietse Venema's TCP Wrapper hosts.deny file */
+-#define WRAPPER_HOSTS_DENY "/etc/hosts.deny"
++#define WRAPPER_HOSTS_DENY "/etc/tcpd/hosts.deny"
+ 
+ /* The default syslog is as daemon.notice. You can also use */
+ /* any of the facilities from syslog.h to send messages to (LOCAL0, etc) */
