@@ -15,6 +15,7 @@ URL:		http://www.psionic.com/tools/portsentry/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/portsentry
+
 %description
 PortSentry is part of the Abacus Project suite of tools. The Abacus
 Project is an initiative to release low-maintenance, generic, and
@@ -32,7 +33,7 @@ portów dla internetowej spo³eczno¶ci.
 %patch0 -p1 
 
 %build
-%{__make} linux CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O0 -g} -Wall"
+%{__make} linux CFLAGS="%{rpmcflags} -Wall"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -40,7 +41,6 @@ install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
 
 %{__make} install INSTALLDIR=$RPM_BUILD_ROOT
 install ignore.sh $RPM_BUILD_ROOT%{_bindir}
-strip $RPM_BUILD_ROOT%{_bindir}/portsentry
 
 gzip -9nf README* CHANGES CREDITS LICENSE
 
