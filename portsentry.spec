@@ -1,5 +1,5 @@
-Summary:	Port scan detection and active defense.
-Summary(pl):	Program wykrywaj±cy skanowanie portów i umo¿liwiaj±cy obronê.
+Summary:	Port scan detection and active defense
+Summary(pl):	Program wykrywaj±cy skanowanie portów i umo¿liwiaj±cy obronê
 Name:		portsentry
 Version:	1.0
 Release:	2
