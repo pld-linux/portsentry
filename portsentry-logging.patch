@@ -1,0 +1,367 @@
+diff -urN portsentry-1.0.orig/portsentry.c portsentry-1.0/portsentry.c
+--- portsentry-1.0.orig/portsentry.c	Sun Nov 14 23:43:06 1999
++++ portsentry-1.0/portsentry.c	Sat May 19 14:23:17 2001
+@@ -326,7 +326,7 @@
+   if ((ipPtr->ihl < 5) || (ipPtr->ihl > 15))
+     {
+       addr.s_addr = (u_int) ipPtr->saddr;
+-      Log ("attackalert: Illegal IP header length detected: %d from (possible) host: %s\n",
++      LogAttack ("attackalert: Illegal IP header length detected: %d from (possible) host: %s\n",
+ 	 ipPtr->ihl, inet_ntoa (addr));
+       return (FALSE);
+     }
+@@ -358,7 +358,7 @@
+   if ((ipPtr->ihl < 5) || (ipPtr->ihl > 15))
+     {
+       addr.s_addr = (u_int) ipPtr->saddr;
+-      Log ("attackalert: Illegal IP header length detected: %d from (possible) host: %s\n",
++      LogAttack ("attackalert: Illegal IP header length detected: %d from (possible) host: %s\n",
+ 	 ipPtr->ihl, inet_ntoa (addr));
+       return (FALSE);
+     }
+@@ -485,7 +485,7 @@
+ 
+ 		  if (result == ERROR)
+ 		    {
+-		      Log ("attackalert: ERROR: cannot open ignore file. Blocking host anyway.\n");
++		      LogAttack ("attackalert: ERROR: cannot open ignore file. Blocking host anyway.\n");
+ 		      result = FALSE;
+ 		    }
+ 
+@@ -505,12 +505,12 @@
+ 
+ 
+ 			  packetType = ReportPacketType (tcp);
+-			  Log ("attackalert: %s from host: %s/%s to TCP port: %d",
++			  LogAttack ("attackalert: %s from host: %s/%s to TCP port: %d",
+ 			     packetType, resolvedHost, target,
+ 			     ports2[count]);
+ 			  /* Report on options present */
+ 			  if (ip.ihl > 5)
+-			    Log ("attackalert: Packet from host: %s/%s to TCP port: %d has IP options set (detection avoidance technique).",
++			    LogAttack ("attackalert: Packet from host: %s/%s to TCP port: %d has IP options set (detection avoidance technique).",
+ 			       resolvedHost, target, ports2[count]);
+ 
+ 			  /* check if this target is already blocked */
+@@ -518,7 +518,7 @@
+ 			    {
+ 			      /* toast the prick */
+ 			      if (DisposeTCP (target, ports2[count]) != TRUE)
+-				Log ("attackalert: ERROR: Could not block host %s/%s !!",
++				LogAttack ("attackalert: ERROR: Could not block host %s/%s !!",
+ 				   resolvedHost, target);
+ 			      else
+ 				WriteBlocked (target, resolvedHost,
+@@ -526,7 +526,7 @@
+ 					      gblHistoryFile, "TCP");
+ 			    }	/* end IsBlocked check */
+ 			  else
+-			    Log ("attackalert: Host: %s/%s is already blocked Ignoring",
++			    LogAttack ("attackalert: Host: %s/%s is already blocked Ignoring",
+ 			       resolvedHost, target);
+ 			}	/* end if(scanDetectTrigger) */
+ 		    }		/* end if(never block) check */
+@@ -664,7 +664,7 @@
+ 
+ 		  if (result == ERROR)
+ 		    {
+-		      Log ("attackalert: ERROR: cannot open ignore file. Blocking host anyway.\n");
++		      LogAttack ("attackalert: ERROR: cannot open ignore file. Blocking host anyway.\n");
+ 		      result = FALSE;
+ 		    }
+ 
+@@ -684,11 +684,11 @@
+ 			    snprintf (resolvedHost, DNSMAXBUF, "%s", target);
+ 
+ 			  packetType = ReportPacketType (tcp);
+-			  Log ("attackalert: %s from host: %s/%s to TCP port: %d",
++			  LogAttack ("attackalert: %s from host: %s/%s to TCP port: %d",
+ 			     packetType, resolvedHost, target, incomingPort);
+ 			  /* Report on options present */
+ 			  if (ip.ihl > 5)
+-			    Log ("attackalert: Packet from host: %s/%s to TCP port: %d has IP options set (detection avoidance technique).",
++			    LogAttack ("attackalert: Packet from host: %s/%s to TCP port: %d has IP options set (detection avoidance technique).",
+ 			       resolvedHost, target, incomingPort);
+ 
+ 			  /* check if this target is already blocked */
+@@ -696,7 +696,7 @@
+ 			    {
+ 			      /* toast the prick */
+ 			      if (DisposeTCP (target, incomingPort) != TRUE)
+-				Log ("attackalert: ERROR: Could not block host %s/%s!!",
++				LogAttack ("attackalert: ERROR: Could not block host %s/%s!!",
+ 				   resolvedHost, target);
+ 			      else
+ 				WriteBlocked (target, resolvedHost,
+@@ -704,7 +704,7 @@
+ 					      gblHistoryFile, "TCP");
+ 			    }	/* end IsBlocked check */
+ 			  else
+-			    Log ("attackalert: Host: %s/%s is already blocked Ignoring",
++			    LogAttack ("attackalert: Host: %s/%s is already blocked Ignoring",
+ 			       resolvedHost, target);
+ 			}	/* end if(scanDetectTrigger) */
+ 		    }		/* end if(never block) check */
+@@ -825,7 +825,7 @@
+ 
+ 	      if (result == ERROR)
+ 		{
+-		  Log ("attackalert: ERROR: cannot open ignore file. Blocking host anyway.\n");
++		  LogAttack ("attackalert: ERROR: cannot open ignore file. Blocking host anyway.\n");
+ 		  result = FALSE;
+ 		}
+ 
+@@ -843,18 +843,18 @@
+ 		      else
+ 			snprintf (resolvedHost, DNSMAXBUF, "%s", target);
+ 
+-		      Log ("attackalert: UDP scan from host: %s/%s to UDP port: %d",
++		      LogAttack ("attackalert: UDP scan from host: %s/%s to UDP port: %d",
+ 			 resolvedHost, target, ports2[count]);
+ 		      /* Report on options present */
+ 		      if (ip.ihl > 5)
+-			Log ("attackalert: Packet from host: %s/%s to UDP port: %d has IP options set (detection avoidance technique).",
++			LogAttack ("attackalert: Packet from host: %s/%s to UDP port: %d has IP options set (detection avoidance technique).",
+ 			       resolvedHost, target, incomingPort);
+ 
+ 		      /* check if this target is already blocked */
+ 		      if (IsBlocked (target, gblBlockedFile) == FALSE)
+ 			{
+ 			  if (DisposeUDP (target, ports2[count]) != TRUE)
+-			    Log ("attackalert: ERROR: Could not block host %s/%s!!",
++			    LogAttack ("attackalert: ERROR: Could not block host %s/%s!!",
+ 			       resolvedHost, target);
+ 			  else
+ 			    WriteBlocked (target, resolvedHost, ports2[count],
+@@ -862,7 +862,7 @@
+ 			}	/* end IsBlocked check */
+ 		      else
+ 			{
+-			  Log ("attackalert: Host: %s/%s is already blocked Ignoring",
++			  LogAttack ("attackalert: Host: %s/%s is already blocked Ignoring",
+ 			     resolvedHost, target);
+ 			}
+ 		    }		/* end if(scanDetectTrigger) */
+@@ -998,7 +998,7 @@
+ 
+ 	      if (result == ERROR)
+ 		{
+-		  Log ("attackalert: ERROR: cannot open ignore file. Blocking host anyway.\n");
++		  LogAttack ("attackalert: ERROR: cannot open ignore file. Blocking host anyway.\n");
+ 		  result = FALSE;
+ 		}
+ 
+@@ -1017,25 +1017,25 @@
+ 		      else
+ 			snprintf (resolvedHost, DNSMAXBUF, "%s", target);
+ 
+-		      Log ("attackalert: UDP scan from host: %s/%s to UDP port: %d",
++		      LogAttack ("attackalert: UDP scan from host: %s/%s to UDP port: %d",
+ 			 resolvedHost, target, incomingPort);
+ 		      /* Report on options present */
+ 		      if (ip.ihl > 5)
+-			Log ("attackalert: Packet from host: %s/%s to UDP port: %d has IP options set (detection avoidance technique).",
++			LogAttack ("attackalert: Packet from host: %s/%s to UDP port: %d has IP options set (detection avoidance technique).",
+ 			       resolvedHost, target, incomingPort);
+ 
+ 		      /* check if this target is already blocked */
+ 		      if (IsBlocked (target, gblBlockedFile) == FALSE)
+ 			{
+ 			  if (DisposeUDP (target, incomingPort) != TRUE)
+-			    Log ("attackalert: ERROR: Could not block host %s/%s!!",
++			    LogAttack ("attackalert: ERROR: Could not block host %s/%s!!",
+ 			       resolvedHost, target);
+ 			  else
+ 			    WriteBlocked (target, resolvedHost, incomingPort,
+ 					  gblBlockedFile, gblHistoryFile, "UDP");
+ 			}	/* end IsBlocked check */
+ 		      else
+-			Log ("attackalert: Host: %s/%s is already blocked Ignoring",
++			LogAttack ("attackalert: Host: %s/%s is already blocked Ignoring",
+ 			   resolvedHost, target);
+ 		    }		/* end if(scanDetectTrigger) */
+ 		}		/* end if(never block) check */
+@@ -1173,7 +1173,7 @@
+ 			    &length);
+ 		  if (incomingSockfd < 0)
+ 		    {
+-		      Log ("attackalert: Possible stealth scan from unknown host to TCP port: %d (accept failed)",
++		      LogAttack ("attackalert: Possible stealth scan from unknown host to TCP port: %d (accept failed)",
+ 			 ports[count]);
+ 		      break;
+ 		    }
+@@ -1186,7 +1186,7 @@
+ 
+ 		  if (result == ERROR)
+ 		    {
+-		      Log ("attackalert: ERROR: cannot open ignore file. Blocking host anyway.\n");
++		      LogAttack ("attackalert: ERROR: cannot open ignore file. Blocking host anyway.\n");
+ 		      result = FALSE;
+ 		    }
+ 
+@@ -1211,14 +1211,14 @@
+ 			  else
+ 			    snprintf (resolvedHost, DNSMAXBUF, "%s", target);
+ 
+-			  Log ("attackalert: Connect from host: %s/%s to TCP port: %d",
++			  LogAttack ("attackalert: Connect from host: %s/%s to TCP port: %d",
+ 			     resolvedHost, target, ports[count]);
+ 
+ 			  /* check if this target is already blocked */
+ 			  if (IsBlocked (target, gblBlockedFile) == FALSE)
+ 			    {
+ 			      if (DisposeTCP (target, ports[count]) != TRUE)
+-				Log ("attackalert: ERROR: Could not block host %s !!",
++				LogAttack ("attackalert: ERROR: Could not block host %s !!",
+ 				   target);
+ 			      else
+ 				WriteBlocked (target, resolvedHost,
+@@ -1226,7 +1226,7 @@
+ 					      gblHistoryFile, "TCP");
+ 			    }
+ 			  else
+-			    Log ("attackalert: Host: %s is already blocked. Ignoring",
++			    LogAttack ("attackalert: Host: %s is already blocked. Ignoring",
+ 			       target);
+ 			}
+ 		    }
+@@ -1380,7 +1380,7 @@
+ 		  result = NeverBlock (target, gblIgnoreFile);
+ 		  if (result == ERROR)
+ 		    {
+-		      Log ("attackalert: ERROR: cannot open ignore file. Blocking host anyway.\n");
++		      LogAttack ("attackalert: ERROR: cannot open ignore file. Blocking host anyway.\n");
+ 		      result = FALSE;
+ 		    }
+ 		  if (result == FALSE)
+@@ -1410,7 +1410,7 @@
+ 			  if (IsBlocked (target, gblBlockedFile) == FALSE)
+ 			    {
+ 			      if (DisposeUDP (target, ports[count]) != TRUE)
+-				Log ("attackalert: ERROR: Could not block host %s !!",
++				LogAttack ("attackalert: ERROR: Could not block host %s !!",
+ 				   target);
+ 			      else
+ 				WriteBlocked (target, resolvedHost,
+@@ -1418,7 +1418,7 @@
+ 					      gblHistoryFile, "UDP");
+ 			    }
+ 			  else
+-			    Log ("attackalert: Host: %s is already blocked. Ignoring",
++			    LogAttack ("attackalert: Host: %s is already blocked. Ignoring",
+ 			       target);
+ 			}
+ 		    }
+@@ -1469,7 +1469,7 @@
+ 	  status = FALSE;
+     }
+   else
+-    Log ("attackalert: Ignoring TCP response per configuration file setting.");
++    LogAttack ("attackalert: Ignoring TCP response per configuration file setting.");
+ 
+   return (status);
+ }
+@@ -1508,7 +1508,7 @@
+ 	  status = FALSE;
+     }
+   else
+-    Log ("attackalert: Ignoring UDP response per configuration file setting.");
++    LogAttack ("attackalert: Ignoring UDP response per configuration file setting.");
+ 
+   return (status);
+ }
+diff -urN portsentry-1.0.orig/portsentry_config.h portsentry-1.0/portsentry_config.h
+--- portsentry-1.0.orig/portsentry_config.h	Tue Mar  7 20:45:13 2000
++++ portsentry-1.0/portsentry_config.h	Sat May 19 14:23:17 2001
+@@ -40,7 +40,7 @@
+ /* any of the facilities from syslog.h to send messages to (LOCAL0, etc) */
+ #define SYSLOG_FACILITY LOG_DAEMON
+ #define SYSLOG_LEVEL LOG_NOTICE
+-
++#define SYSLOG_LEVEL_ATTACK LOG_ALERT
+ 
+ /* the maximum number of hosts to keep in a "previous connect" state engine*/
+ #define MAXSTATE 50 
+diff -urN portsentry-1.0.orig/portsentry_io.c portsentry-1.0/portsentry_io.c
+--- portsentry-1.0.orig/portsentry_io.c	Sun Nov 14 23:43:06 1999
++++ portsentry-1.0/portsentry_io.c	Sat May 19 14:30:09 2001
+@@ -34,22 +34,34 @@
+ 
+ /* Main logging function to surrogate syslog */
+ void 
+-Log (char *logentry, ...)
++DoLog (int priority, char *logentry, va_list argsPtr)
+ {
+   char logbuffer[MAXBUF];
+ 
+-  va_list argsPtr;
+-  va_start (argsPtr, logentry);
+-
+   vsnprintf (logbuffer, MAXBUF, logentry, argsPtr);
+ 
+-  va_end(argsPtr);
+-
+   openlog ("portsentry", LOG_PID, SYSLOG_FACILITY);
+-  syslog (SYSLOG_LEVEL, "%s", logbuffer);
++  syslog (priority, "%s", logbuffer);
+   closelog ();
+ }
+ 
++void
++Log (char *logentry, ...)
++{
++  va_list argsPtr;
++  va_start (argsPtr, logentry);
++  DoLog (SYSLOG_LEVEL, logentry, argsPtr);
++  va_end(argsPtr);
++}
++
++void
++LogAttack (char *logentry, ...)
++{
++  va_list argsPtr;
++  va_start (argsPtr, logentry);
++  DoLog (SYSLOG_LEVEL_ATTACK, logentry, argsPtr);
++  va_end(argsPtr);
++}
+ 
+ void 
+ Exit (int status)
+@@ -460,7 +472,7 @@
+     }
+   else
+     {
+-      Log ("attackalert: Host %s has been blocked via dropped route using command: \"%s\"", target,
++      LogAttack ("attackalert: Host %s has been blocked via dropped route using command: \"%s\"", target,
+ 		commandStringFinal);
+       return (TRUE);
+     }
+@@ -508,7 +520,7 @@
+   else
+     {
+       /* report success */
+-      Log ("attackalert: External command run for host: %s using command: \"%s\"", target,
++      LogAttack ("attackalert: External command run for host: %s using command: \"%s\"", target,
+ 		commandStringFinal);
+       return (TRUE);
+     }
+@@ -568,7 +580,7 @@
+     {
+       fprintf (output, "%s\n", commandStringFinal);
+       fclose (output);
+-      Log ("attackalert: Host %s has been blocked via wrappers with string: \"%s\"", target, commandStringFinal);
++      LogAttack ("attackalert: Host %s has been blocked via wrappers with string: \"%s\"", target, commandStringFinal);
+       return (TRUE);
+     }
+ }
+diff -urN portsentry-1.0.orig/portsentry_io.h portsentry-1.0/portsentry_io.h
+--- portsentry-1.0.orig/portsentry_io.h	Sun Nov 14 23:43:06 1999
++++ portsentry-1.0/portsentry_io.h	Sat May 19 14:23:17 2001
+@@ -31,6 +31,7 @@
+ /* prototypes */
+ int WriteBlocked (char *, char *, int, char *, char *, char *);
+ void Log (char *,...);
++void LogAttack (char *,...);
+ void Exit (int);
+ void Start (void);
+ int DaemonSeed (void);
