@@ -5,8 +5,6 @@ Version:	1.0
 Release:	7
 License:	distributable (see LICENSE)
 Group:		Applications/Networking
-Group(de):	Applikationen/Netzwerkwesen
-Group(pl):	Aplikacje/Sieciowe
 Source0:	http://www.psionic.com/tools/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
