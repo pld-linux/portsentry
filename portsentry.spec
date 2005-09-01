@@ -12,11 +12,12 @@ Source2:	%{name}.sysconfig
 Patch0:		%{name}-logging-pld.patch
 Patch1:		%{name}-ignore.csh.patch
 URL:		http://www.psionic.com/products/
-PreReq:		rc-scripts
-PreReq:		/bin/awk
-PreReq:		/bin/csh
-PreReq:		iproute2
-PreReq:		textutils
+BuildRequires:	sed >= 4.0
+Requires:	rc-scripts
+Requires:	/bin/awk
+Requires:	/bin/csh
+Requires:	iproute2
+Requires:	textutils
 Requires(post,preun):	/sbin/chkconfig
 Requires(post,preun):	fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -86,10 +87,10 @@ fi
 %defattr(644,root,root,755)
 %doc README* CHANGES CREDITS LICENSE
 %attr(750,root,root) %dir %{_sysconfdir}
-%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/portsentry.conf
-%attr(640,root,root) %config(noreplace,missingok) %verify(not md5 size mtime) %{_sysconfdir}/portsentry.ignore
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/portsentry.conf
+%attr(640,root,root) %config(noreplace,missingok) %verify(not md5 mtime size) %{_sysconfdir}/portsentry.ignore
 %attr(640,root,root) %ghost %{_sysconfdir}/portsentry.history
 %attr(640,root,root) %ghost %{_sysconfdir}/portsentry.blocked*
-%attr(640,root,root) %config %verify(not md5 size mtime) /etc/sysconfig/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/*
 %attr(754,root,root) /etc/rc.d/init.d/*
 %attr(755,root,root) %{_bindir}/*
