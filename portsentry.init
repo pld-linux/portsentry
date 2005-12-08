@@ -75,7 +75,7 @@ case "$1" in
 	}
 	msg_stopping portsentry
 	killproc portsentry
-	rm -f /var/lock/subsys/portsentry* >/dev/null 2>&1	
+	rm -f /var/lock/subsys/portsentry* >/dev/null 2>&1
 	rm -f /var/run/portsentry.pid /var/run/portsentry.loc* >/dev/null 2>&1
 	;;
   status)
