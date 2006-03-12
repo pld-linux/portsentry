@@ -26,7 +26,7 @@ PORTSENTRY_SUDP="false"
 
 # Advanced Switches
 #
-# WARNING! Using this switches without a proper knowledge 
+# WARNING! Using these switches without a proper knowledge
 #          may cause some false security alerts. In fact,
 #          if it's set by default it means that good boys from PLD
 #          have looked at config files and it should work almost fine. :>
