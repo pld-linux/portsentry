@@ -1,0 +1,11 @@
+--- portsentry-1.1/portsentry.conf~	2006-03-12 22:22:23.000000000 +0200
++++ portsentry-1.1/portsentry.conf	2006-03-12 22:24:10.000000000 +0200
+@@ -203,7 +203,7 @@
+ #KILL_ROUTE="/sbin/ipchains -I input -s $TARGET$ -j DENY"
+ #
+ # iptables support for Linux
+-#KILL_ROUTE="/usr/local/bin/iptables -I INPUT -s $TARGET$ -j DROP"
++KILL_ROUTE="/usr/sbin/iptables -I INPUT -s $TARGET$ -j DROP"
+ #
+ # For those of you running FreeBSD (and compatible) you can
+ # use their built in firewalling as well. 

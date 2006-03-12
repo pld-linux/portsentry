@@ -12,6 +12,7 @@ Source2:	%{name}.sysconfig
 Patch0:		%{name}-logging-pld.patch
 Patch1:		%{name}-ignore.csh.patch
 Patch2:		%{name}-libwrap.patch
+Patch3:		%{name}-config.patch
 URL:		http://www.psionic.com/products/
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
@@ -41,6 +42,7 @@ portów dla internetowej spo³eczno¶ci.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__make} linux \
@@ -61,6 +63,9 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/portsentry
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/portsentry
 
 touch $RPM_BUILD_ROOT%{_sysconfdir}/{portsentry.blocked.{audp,atcp,stcp,sudp,tcp,udp},portsentry.history}
+
+# the portsentry binary
+rm -f $RPM_BUILD_ROOT/etc/portsentry/portsentry
 
 %clean
 rm -rf $RPM_BUILD_ROOT

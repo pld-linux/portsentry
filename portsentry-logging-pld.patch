@@ -385,15 +385,6 @@
  
  ##############################
  # Misc. Configuration Options#
-@@ -197,7 +197,7 @@
- #KILL_ROUTE="/sbin/ipfwadm -I -i deny -S $TARGET$"
- #
- # ipchain support for Linux
--#KILL_ROUTE="/sbin/ipchains -I input -s $TARGET$ -j DENY -l"
-+KILL_ROUTE="/sbin/ipchains -I input -s $TARGET$ -j DENY "
- #
- # ipchain support for Linux (no logging of denied packets)
- #KILL_ROUTE="/sbin/ipchains -I input -s $TARGET$ -j DENY"
 @@ -278,7 +278,7 @@
  # SSL [TCP port 443] and you immediately block them). Some of you
  # may even want this though. Just be careful.
