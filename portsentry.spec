@@ -2,7 +2,7 @@ Summary:	Port scan detection and active defense
 Summary(pl):	Program wykrywaj±cy skanowanie portów i umo¿liwiaj±cy obronê
 Name:		portsentry
 Version:	1.1
-Release:	10
+Release:	10.1
 License:	distributable (see LICENSE)
 Group:		Applications/Networking
 Source0:	http://www.psionic.com/downloads/%{name}-%{version}.tar.gz
@@ -11,15 +11,14 @@ Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-logging-pld.patch
 Patch1:		%{name}-ignore.csh.patch
+Patch2:		%{name}-libwrap.patch
 URL:		http://www.psionic.com/products/
-BuildRequires:	sed >= 4.0
-Requires:	rc-scripts
-Requires:	/bin/awk
-Requires:	/bin/csh
-Requires:	iproute2
-Requires:	textutils
 Requires(post,preun):	/sbin/chkconfig
 Requires(post,preun):	fileutils
+Requires:	awk
+Requires:	iproute2
+Requires:	rc-scripts
+Requires:	textutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/portsentry
@@ -40,21 +39,22 @@ portów dla internetowej spo³eczno¶ci.
 %setup  -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
-%{__sed} -i -e 's@\/etc\/hosts.deny@\/etc\/tcpd\/hosts.deny@' portsentry_config.h
 %{__make} linux \
+	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags} -Wall"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},/etc/{rc.d/init.d,sysconfig}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,sysconfig}}
 
 %{__make} install \
 	INSTALLDIR=$RPM_BUILD_ROOT/etc
 
-install ignore.csh $RPM_BUILD_ROOT%{_bindir}
-install portsentry $RPM_BUILD_ROOT%{_bindir}
+install ignore.csh $RPM_BUILD_ROOT%{_sbindir}/portsentry-ignore
+install portsentry $RPM_BUILD_ROOT%{_sbindir}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/portsentry
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/portsentry
@@ -65,7 +65,7 @@ touch $RPM_BUILD_ROOT%{_sysconfdir}/{portsentry.blocked.{audp,atcp,stcp,sudp,tcp
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%{_bindir}/ignore.csh
+%{_sbindir}/portsentry-ignore
 /sbin/chkconfig --add portsentry
 ls --color=none /var/lock/subsys/portsentry* >/dev/null 2>&1
 if [ $? -eq "0" ]; then
@@ -93,4 +93,4 @@ fi
 %attr(640,root,root) %ghost %{_sysconfdir}/portsentry.blocked*
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/*
 %attr(754,root,root) /etc/rc.d/init.d/*
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_sbindir}/*
