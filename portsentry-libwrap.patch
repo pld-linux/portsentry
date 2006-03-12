@@ -1,0 +1,12 @@
+diff -ur -ur portsentry-1.1/portsentry_config.h portsentry-1.1.orig/portsentry_config.h
+--- portsentry-1.1/portsentry_config.h	2006-03-12 21:19:22.000000000 +0200
++++ portsentry-1.1.orig/portsentry_config.h	2006-03-12 21:18:02.000000000 +0200
+@@ -32,7 +32,7 @@
+ #define CONFIG_FILE "/etc/portsentry/portsentry.conf"
+ 
+ /* The location of Wietse Venema's TCP Wrapper hosts.deny file */
+-#define WRAPPER_HOSTS_DENY "/etc/hosts.deny"
++#define WRAPPER_HOSTS_DENY "/etc/tcpd/hosts.deny"
+ 
+ /* The default syslog is as daemon.notice. You can also use */
+ /* any of the facilities from syslog.h to send messages to (LOCAL0, etc) */
