@@ -2,7 +2,7 @@ Summary:	Port scan detection and active defense
 Summary(pl):	Program wykrywaj±cy skanowanie portów i umo¿liwiaj±cy obronê
 Name:		portsentry
 Version:	1.1
-Release:	10.1
+Release:	11
 License:	distributable (see LICENSE)
 Group:		Applications/Networking
 Source0:	http://www.psionic.com/downloads/%{name}-%{version}.tar.gz
@@ -13,6 +13,7 @@ Patch0:		%{name}-logging-pld.patch
 Patch1:		%{name}-ignore.csh.patch
 Patch2:		%{name}-libwrap.patch
 URL:		http://www.psionic.com/products/
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
 Requires(post,preun):	fileutils
 Requires:	awk
@@ -67,19 +68,11 @@ rm -rf $RPM_BUILD_ROOT
 %post
 %{_sbindir}/portsentry-ignore
 /sbin/chkconfig --add portsentry
-ls --color=none /var/lock/subsys/portsentry* >/dev/null 2>&1
-if [ $? -eq "0" ]; then
-	/etc/rc.d/init.d/portsentry restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/portsentry start\" to start portsentry daemon."
-fi
+%service portsentry restart "portsentry daemon"
 
 %preun
 if [ "$1" = "0" ]; then
-	ls --color=none /var/lock/subsys/portsentry* >/dev/null 2>&1
-	if [ $? -eq "0" ]; then
-		/etc/rc.d/init.d/portsentry stop >&2
-	fi
+	%service portsentry stop
 	/sbin/chkconfig --del portsentry
 fi
 
