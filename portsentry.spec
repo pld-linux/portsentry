@@ -1,5 +1,5 @@
 Summary:	Port scan detection and active defense
-Summary(pl):	Program wykrywaj±cy skanowanie portów i umo¿liwiaj±cy obronê
+Summary(pl.UTF-8):   Program wykrywajÄ…cy skanowanie portÃ³w i umoÅ¼liwiajÄ…cy obronÄ™
 Name:		portsentry
 Version:	1.1
 Release:	11
@@ -31,11 +31,11 @@ Project is an initiative to release low-maintenance, generic, and
 reliable host based intrusion detection software to the Internet
 community.
 
-%description -l pl
-PortSentry jest czê¶ci± zestawu narzêdzi Projektu Abacus. Projekt
-Abacus ma na celu stworzenie ogólnego, pewnego i wymagaj±cego
-niewielkiej obs³ugi oprogramowania do wykrywania prób skanowania
-portów dla internetowej spo³eczno¶ci.
+%description -l pl.UTF-8
+PortSentry jest czÄ™Å›ciÄ… zestawu narzÄ™dzi Projektu Abacus. Projekt
+Abacus ma na celu stworzenie ogÃ³lnego, pewnego i wymagajÄ…cego
+niewielkiej obsÅ‚ugi oprogramowania do wykrywania prÃ³b skanowania
+portÃ³w dla internetowej spoÅ‚ecznoÅ›ci.
 
 %prep
 %setup  -q
